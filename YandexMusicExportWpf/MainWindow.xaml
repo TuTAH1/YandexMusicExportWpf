@@ -1,0 +1,44 @@
+﻿<Window x:Class="YandexMusicExportWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:anim="https://github.com/whistyun/AnimatedImage.Wpf"
+        xmlns:local="clr-namespace:YandexMusicExportWpf"
+        mc:Ignorable="d"
+        Title="Экспорт Яндекс.Музыки" Height="454" Width="276">
+    <Window.Resources>
+    </Window.Resources>
+    <Grid x:Name="gridMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--Add label with textbox-->
+        <TextBox x:Name="tbUsername" Margin="10 10 10 0" Grid.Column="0" Grid.Row="0"  Height="20" VerticalAlignment="Top" 
+                 Panel.ZIndex="1" IsEnabled="True" BorderBrush="#FFB0B0BF" CharacterCasing="Lower"
+                 TextChanged="TbUsername_OnTextChanged" PreviewKeyDown="TbUsername_OnPreviewKeyDown" PreviewTextInput="TbUsername_OnPreviewTextInput" />
+
+        <Image x:Name="imgUsernameLoading" anim:ImageBehavior.AnimatedSource="pack://siteoforigin:,,,/resources/Ripple.png" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Panel.ZIndex="10" Visibility="Collapsed"/>
+        <Image x:Name="imgUsernameCross" Source="pack://siteoforigin:,,,/resources/Restart.png" Width="15" Height="15" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10,15,0" Panel.ZIndex="11" Visibility="Collapsed" MouseDown="ImgUsernameCross_OnMouseDown"/>
+        <TextBlock x:Name="tblUsername" Margin="5 0 0 5" TextWrapping="WrapWithOverflow" Grid.Row="1" FontSize="10" Foreground="#FF5F5F5F">
+            Имя пользователя на английском (как адрес почта до "@")
+        </TextBlock>
+
+        <ScrollViewer x:Name="svCheckBox" Grid.Row="2">
+            <StackPanel x:Name="spCheckBox">
+                <CheckBox Margin="0,2,0,2">Test</CheckBox>
+                <CheckBox Margin="0,2,0,2">Test</CheckBox>
+                <CheckBox Margin="0,2,0,2">Test</CheckBox>
+            </StackPanel>
+        </ScrollViewer>
+
+
+        <!-- Добавьте остальные элементы интерфейса в первую строку с помощью Grid.Row="0" -->
+
+        <Button x:Name="btnSubmit" Content="Моя кнопка" Margin="10" Grid.Row="3" HorizontalAlignment="Stretch" Click="btnSubmit_Click" />
+    </Grid>
+</Window>

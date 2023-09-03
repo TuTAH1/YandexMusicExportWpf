@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="resources\Cross.png" />
+    <None Remove="resources\Restart.png" />
+    <None Remove="resources\Rewind.png" />
+    <None Remove="resources\Ripple Source.url" />
+    <None Remove="resources\Ripple.png" />
+    <None Remove="resources\spinner.svg" />
+    <None Remove="resources\test.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\Restart.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\Ripple.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AnimatedImage.Wpf" Version="1.0.1" />
+    <PackageReference Include="Ookii.Dialogs.Wpf" Version="5.0.1" />
+  </ItemGroup>
+
+</Project>
