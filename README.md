@@ -23,4 +23,4 @@
 <img src="https://github.com/TuTAH1/YandexMusicExportWpf/assets/15982179/6e97ab0e-5f7e-4613-ae85-aecc448b53fd" height="180px" />
 <img src="https://github.com/TuTAH1/YandexMusicExportWpf/assets/15982179/f18b4025-a349-4156-918b-9a32dd0435c5" height="180px" />
 
-Дальше можно открыть любой сайт для экспорта музыки (например, [этот](https://www.tunemymusic.com)https://www.tunemymusic.com) и импортировать плейлист в другой музыкальный сервис.
+Дальше можно открыть любой сайт для экспорта музыки (например, [этот](https://www.tunemymusic.com)) и импортировать плейлист в другой музыкальный сервис.
