@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using Titanium;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using static Titanium.TypesFuncs;
 using CheckBox = System.Windows.Controls.CheckBox;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -100,6 +101,7 @@ namespace YandexMusicExportWpf
 				response.EnsureSuccessStatusCode();
 
 				string responseContent = await response.Content.ReadAsStringAsync();
+				responseContent = responseContent.Replace("\"visibility\": \"private\"", "\"visibility\": \"public\"");
 
 				var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 				return JsonSerializer.Deserialize<UserPlaylistsResponse>(responseContent, options);
@@ -133,7 +135,7 @@ namespace YandexMusicExportWpf
 				case CurrentState.Initial:
 					try
 					{
-						Username = tbUsername.Text = tbUsername.Text.Slice(0,"@", AlwaysReturnString: true);
+						Username = tbUsername.Text = tbUsername.Text.Slice(0,"@", SliceReturn.Always);
 						if (string.IsNullOrWhiteSpace(Username))
 						{
 							tbUsername.BorderBrush = Brushes.Red;
@@ -218,11 +220,11 @@ namespace YandexMusicExportWpf
 
 							cbPlaylist.Foreground = Brushes.Orange;
 							
-							var playlistResponse = JsonSerializer.Deserialize<PlaylistResponse>(responseContent, options);
+							var playlists = JsonSerializer.Deserialize<PlaylistResponse>(responseContent, options)?.Playlist;
 
 							// Извлечение названия плейлиста и списка треков из полученного ответа
-							var playlistTitle = playlistResponse?.Playlist.Title;
-							var tracks = playlistResponse?.Playlist.Tracks;
+							var playlistTitle = playlists?.Title.RemoveAll(Path.GetInvalidFileNameChars());;
+							var tracks = playlists?.Tracks;
 							string allFile = "";
 
 							// Итерация по каждому треку в списке треков
@@ -243,8 +245,9 @@ namespace YandexMusicExportWpf
 								allFile += fullTrack;
 							}
 
-							try
+							try //: Сохранение файла
 							{
+								//: Убирание всех недопустимых символов из имени файла
 								await using var fs = new StreamWriter($"{folderBrowser.SelectedPath}\\{playlistTitle}.txt");
 								await fs.WriteAsync(allFile);
 								fs.Close();
@@ -262,13 +265,12 @@ namespace YandexMusicExportWpf
 									catch (Exception ex) 
 									{
 										ex.ShowMessageBox();
-									}
 								}
-								else
-									e.ShowMessageBox();
 							}
-							
-
+							else
+								e.ShowMessageBox();
+						}
+						cbPlaylist.Content = $"{playlistTitle}, {playlists.TrackCount} треков";
 							cbPlaylist.Foreground = Brushes.Green;
 						}
 						catch (Exception exception)
@@ -341,6 +343,7 @@ namespace YandexMusicExportWpf
 		public Track[]? Tracks { get; set; }
 		public int Kind { get; set; }
 		public int TrackCount { get; set; }
+		public string Visibility { get; set; } //: "public" or "private"
 	}
 
 	internal class Track
